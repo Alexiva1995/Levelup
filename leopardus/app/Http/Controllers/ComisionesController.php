@@ -843,15 +843,17 @@ class ComisionesController extends Controller
         $funciones = new IndexController;
         $GLOBALS['allUsers'] = [];
         $referidosDirectos = $funciones->getReferreds($iduser);
-        $funciones->getReferredsAll($referidosDirectos, 1, 4, [], 'arbol');
+        $funciones->getReferredsAll($referidosDirectos, 1, 2, [], 'arbol');
         $TodosUsuarios = $funciones->ordenarArreglosMultiDimensiones($GLOBALS['allUsers'], 'ID', 'numero');
         $totalPuchaseRed = 0;
         foreach ($TodosUsuarios as $user) {
-            $compras = $this->getShopping($user['ID']);
-            foreach ($compras as $compra ) {
-                $detelles = $this->getShoppingDetails($compra->post_id);
-                if ($detelles->post_status == 'wc-completed') {
-                    $totalPuchaseRed += $this->getShoppingTotal($compra->post_id);
+            if ($user['nivel'] == 1) {
+                $compras = $this->getShopping($user['ID']);
+                foreach ($compras as $compra ) {
+                    $detelles = $this->getShoppingDetails($compra->post_id);
+                    if ($detelles->post_status == 'wc-completed') {
+                        $totalPuchaseRed += $this->getShoppingTotal($compra->post_id);
+                    }
                 }
             }
         }
