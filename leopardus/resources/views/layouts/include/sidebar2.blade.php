@@ -1,7 +1,7 @@
 <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
-    <div class="navbar-header" style="background-color: #00646d;">
+    {{-- <div class="navbar-header">
         <ul class="nav navbar-nav flex-row">
-            {{-- <li class="nav-item mr-auto">
+            <li class="nav-item mr-auto">
                 <a class="navbar-brand" href="">
                     <div class="brand-logo"
                         style="background: url('{{asset('assets/imgLanding/ethc_pagina_principal-12.svg')}}') no-repeat;">
@@ -15,33 +15,37 @@
                     <i class="toggle-icon feather icon-disc font-medium-4 d-none d-xl-block collapse-toggle-icon primary"
                         data-ticon="icon-disc"></i>
                 </a>
-            </li> --}}
+            </li>
             <a class="navbar-brand" href="" href="" style="width: 100%;margin: 0px;">
                 <div class="brand-logo2" style="width: 100%;">
                     <img src="https://comunidadlevelup.com/assets/imgLanding/logo.png" style="width: 100%;">
                 </div>
             </a>
         </ul>
-    </div>
+    </div> --}}
     <div class="shadow-bottom"></div>
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
             <li class="nav-item d-flex justify-content-center">
-
-                <div>
-
-                    <div id="diseng" class="color-example"
-
-                        style="background: url('{{ asset('avatar/'.Auth::user()->avatar) }}')">
-
+                <div class="sidebar-data">
+                    {{-- <div id="diseng" class="color-example" style="background: url('{{ asset('avatar/'.Auth::user()->avatar) }}')">
+                    </div> --}}
+                    <div class="container-avatar">
+                        <div class="sidebar-avatar" style="--v:-70deg">
+                            <img src="{{ asset('avatar/'.Auth::user()->avatar) }}" alt="avtar img holder" height="100" width="100">
+                        </div>
                     </div>
-
-                    <h5 class="text-center">Hola {{Auth::user()->user_nicename}}</h5>
-
-                    <h6 class="text-center">{{Auth::user()->user_email}}</h6>
-
+                    <h5 class="title-card">Welcome!</h5>
+                    {{-- <h5 class="text-center">Hola {{Auth::user()->user_nicename}}</h5>
+                    <h6 class="text-center">{{Auth::user()->user_email}}</h6> --}}
+                    <h2 class="text-center name">{{Auth::user()->display_name}}</h2>
+                    <div class="chip chip-sidebar"> Profile 62% completed </div>
+                    <div class="icon-sidebar">
+                        <span><i class="feather icon-bell"></span></i>
+                        <span><i class="feather icon-edit-2"></span></i>
+                        <span><i class="feather icon-mail"></i></span>
+                    </div>
                 </div>
-
             </li>
             {{-- INICIO --}}
             <li class="nav-item">

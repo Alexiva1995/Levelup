@@ -52,10 +52,10 @@
 
          <div class="col-12 col-md-12 mt-2">
             <h5 class="title-card mb-1">Nuevos Miembros</h5>
-            <div class="card h-100">
+            <div class="card">
                <div class="card-content">
-                  <div class="card-body padding-card">
-                     @foreach ($new_member as $member)
+                  <div class="card-body padding-card-member">
+                     {{-- @foreach ($new_member as $member)
                         <div class="d-flex justify-content-start align-items-center mb-1">
                            <div class="avatar mr-50">
                               <img src="{{asset('avatar/'.$member['avatar'])}}" alt="avtar img holder" height="35" width="35">
@@ -65,7 +65,55 @@
                               <span class="font-small-2">{{date('d-m-Y', strtotime($member['fecha']))}}</span>
                            </div>
                         </div>
-                     @endforeach
+                     @endforeach --}}
+                     <div class="d-flex justify-content-start align-items-center mb-2">
+                        <div class="avatar m-0 mr-1">
+                           <div class="semicircle" style="--v:-70deg">
+                              <img src="https://127.0.0.1/Levelup/public_html/avatar/avatar.png" alt="avtar img holder" height="45" width="45" style="margin-top: 8px;">
+                           </div>
+                        </div>
+                        <div class="user-page-info">
+                           <h6 class="mb-0">Diego Luna</h6>
+                           <p class="mb-0">Golden Memberships</p>
+                           <span class="font-small-3 mt-0">Nivel 2</span>
+                        </div>
+                     </div>
+                     <div class="d-flex justify-content-start align-items-center mb-2">
+                        <div class="avatar semicircle m-0 mr-1">
+                           <div class="semicircle" style="--v:-70deg">
+                              <img src="https://127.0.0.1/Levelup/public_html/avatar/avatar.png" alt="avtar img holder" height="45" width="45" style="margin-top: 8px;">
+                           </div>
+                        </div>
+                        <div class="user-page-info">
+                           <h6 class="mb-0">José Rios</h6>
+                           <p class="mb-0">Silver Memberships</p>
+                           <span class="font-small-3 mt-0">Nivel 1</span>
+                        </div>
+                     </div>
+                     <div class="d-flex justify-content-start align-items-center mb-2">
+                        <div class="avatar semicircle m-0 mr-1">
+                           <div class="semicircle" style="--v:-70deg">
+                              <img src="https://127.0.0.1/Levelup/public_html/avatar/avatar.png" alt="avtar img holder" height="45" width="45" style="margin-top: 8px;">
+                           </div>
+                        </div>
+                        <div class="user-page-info">
+                           <h6 class="mb-0">Jonatan Londoño</h6>
+                           <p class="mb-0">Life time Memberships</p>
+                           <span class="font-small-3 mt-0">Nivel 2</span>
+                        </div>
+                     </div>
+                     <div class="d-flex justify-content-start align-items-center mb-2">
+                        <div class="avatar semicircle m-0 mr-1">
+                           <div class="semicircle" style="--v:-70deg">
+                              <img src="https://127.0.0.1/Levelup/public_html/avatar/avatar.png" alt="avtar img holder" height="45" width="45" style="margin-top: 8px;">
+                           </div>
+                        </div>
+                        <div class="user-page-info">
+                           <h6 class="mb-0">Diego Luna</h6>
+                           <p class="mb-0">Golden Memberships</p>
+                           <span class="font-small-3 mt-0">Nivel 2</span>
+                        </div>
+                     </div>
                  </div>
                </div>
             </div>

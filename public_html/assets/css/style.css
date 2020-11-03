@@ -9,3 +9,239 @@ NOTE:
 ------
 PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
 WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+
+.padding-card {
+	padding: 3rem 2rem !important;
+}
+
+.card {
+	box-shadow: none;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	margin-bottom: 0.5rem;
+}
+
+.card button {
+	border-radius: 50px;
+	background: -prefix-linear-gradient(left,#001CBD, #005);
+	background: linear-gradient(to right, #001CBD, #005);
+	text-transform: uppercase;
+}
+
+.text-card-blue {
+	margin: 0 auto !important;
+	color: #001CBD;
+	font-size: 40px;
+}
+
+.card sup {
+	top: -0.9rem;
+	font-size: 45%;
+}
+
+.title-card {
+	font-weight: normal;
+	color: #808080;
+	text-transform: uppercase;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: normal;
+	letter-spacing: 2px;
+}
+
+.progress.progress-bar-primary.progress-xl {
+	height: 2.5em;
+	border-radius: 50px;
+	background-color: #c9c9c9;
+}
+
+.progress .progress-bar{
+	border-radius: 50px;
+	background: -prefix-linear-gradient(left,#001CBD, #005);
+	background: linear-gradient(to right, #001CBD, #005);
+	font-size: 14px;
+	text-align: left;
+	padding-left: 15px;
+}
+
+.p-blue {
+	color: #001CBD;
+	font-weight: normal;
+}
+
+.p-violet {
+	color: #632FE1;
+	font-weight: normal;
+}
+
+.btn-progress {
+	float: right;
+	text-transform: initial !important;
+	position: relative;
+	top: 30%;
+}
+
+.card-nivel {
+ padding-bottom: 9px !important;
+}
+
+.card-nivel sup {
+	top: -0.8rem;
+	font-size: 45%;
+}
+
+.card-nivel i {
+	font-size: 1.7rem;
+	margin-right: -7px;
+}
+
+.title-nivel {
+	margin: 0 auto;
+	padding: 0;
+}
+
+.padd-0 {
+	padding: 0;
+}
+
+.m-nv-nm {
+	margin: 45px auto 0
+}
+
+.fl-right {
+	float: right;
+}
+
+.nv-title {
+	text-transform: uppercase;
+	color: #808080;
+	font-weight: 500 !important;
+	font-size: 22px !important;
+	letter-spacing: 0.05rem;
+}
+
+.text-nivel {
+	text-align: center;
+	font-size: 10px;
+	text-transform: uppercase;
+	position: relative;
+	right: 0;
+}
+
+.text-ventas {
+	text-align: left;
+	font-size: 12px;
+	text-transform: initial;;
+}
+.padding-card-member {
+	padding: 2rem !important;
+}
+
+.user-page-info > h6 {
+	text-transform: uppercase;
+	font-weight: 600;
+	color: #808080;
+	font-size: 16px;
+}
+
+.user-page-info > p {
+	text-transform: uppercase;
+	font-weight: 100;
+	line-height: 1rem;
+}
+
+span.font-small-3 {
+	text-transform: uppercase;
+	font-style: italic;
+}
+
+.semicircle,
+.sidebar-avatar {
+	display: inline-block;
+	border-radius: 50%;
+	border: 2px solid transparent;
+	background:
+		linear-gradient(#fff,#fff) padding-box,
+		linear-gradient(var(--v), #001CBD 65%, #CCD2F2 0) border-box,
+		linear-gradient(to right, #CCD2F2 65%, #001CBD 0) border-box;
+}
+
+.sidebar-avatar {
+	height: 120px;
+	width: 120px;
+}
+
+.sidebar-avatar img {
+	margin-top: 8px;
+	border-radius: 50%;
+}
+
+.semicircle {
+	width: 65px;
+	height: 65px;
+}
+
+.container-avatar {
+	text-align: center;
+	border-radius: 50%;
+	margin: 0 auto;
+	white-space: nowrap;
+	cursor: pointer;
+	color: #FFFFFF;
+	font-size: 0.75rem;
+}
+
+.sidebar-data h5.title-card {
+	text-align: center;
+	margin-top: 30px;
+}
+
+.sidebar-data h2.name {
+	text-transform: capitalize;
+	color: #808080 !important;
+}
+
+.main-menu .main-menu-content {
+	height: calc(100% - 2rem) !important;
+}
+
+.main-menu.menu-shadow {
+	box-shadow: none;
+	border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu {
+	width: 300px;
+}
+
+html body .content {
+	margin-left: 300px;
+}
+
+.chip-sidebar {
+	color: #001CBD;
+	padding: 4px 10px;
+	background-color: #CCD2F2;
+	display: block;
+	text-align: center;
+	width: max-content;
+	margin: 15px auto 20px;
+}
+
+.icon-sidebar {
+	margin-bottom: 35px;
+}
+
+.icon-sidebar span {
+	font-size: 1.6rem;
+	padding: 18px;
+	border-radius: 50%;
+	color: #001CBD;
+	background-color: #CCD2F2;
+	display: inline-flex;
+	margin: 10px;
+	cursor: pointer;
+}
+
+.icon-sidebar::before {
+	content: none;
+}
