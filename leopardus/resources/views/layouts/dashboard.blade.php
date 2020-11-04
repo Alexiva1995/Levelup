@@ -27,6 +27,7 @@
     data-menu="vertical-menu-modern" data-col="2-columns">
     {{-- header  --}}
     {{-- @include('layouts.include.header') --}}
+    @include('layouts.include.header_t2')
 
     {{-- menu --}}
     @if (Auth::user()->rol_id == 0)
@@ -40,7 +41,7 @@
     <div class="app-content content">
         <div class="content-overlay"></div>
         {{-- <div class="header-navbar-shadow"></div> --}}
-        <div class="content-wrapper" style="margin-top: 0;">
+        <div class="content-wrapper content-margin-t1">
             <div class="content-header row">
                 {{-- <div class="content-header-left col-12 mb-2">
                     <div class="row breadcrumbs-top">

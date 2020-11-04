@@ -11,7 +11,7 @@ PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER
 WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
 
 .padding-card {
-	padding: 3rem 2rem !important;
+	padding: 1.6rem 2rem !important;
 }
 
 .card {
@@ -201,7 +201,7 @@ span.font-small-3 {
 }
 
 .main-menu .main-menu-content {
-	height: calc(100% - 2rem) !important;
+	height: calc(100% - 22vh) !important;
 }
 
 .main-menu.menu-shadow {
@@ -231,17 +231,124 @@ html body .content {
 	margin-bottom: 35px;
 }
 
-.icon-sidebar span {
-	font-size: 1.6rem;
-	padding: 18px;
+.icon-sidebar a {
+	padding: 18px !important;
 	border-radius: 50%;
-	color: #001CBD;
+	color: #001CBD !important;
 	background-color: #CCD2F2;
-	display: inline-flex;
+	display: inline-flex !important;
 	margin: 10px;
 	cursor: pointer;
+	width: 60px;
+	height: 60px;
+}
+
+.icon-sidebar i {
+	font-size: 1.6rem !important;
 }
 
 .icon-sidebar::before {
 	content: none;
+}
+
+.header-navbar.floating-nav {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.navigation li a i {
+	color: #001CBD;
+}
+
+.card-header-t2 {
+	position: absolute;
+	margin-top: -15px;
+	padding-right: 2.3rem;
+}
+
+a.icon-card-header-t2 i {
+	font-size: 1.3rem;
+  color: #808080;
+}
+
+.main-menu ul.navigation-main > li:first-child {
+	margin-top: 1rem;
+}
+
+.navbar-header-t2 {
+	width: 100% !important;
+	text-align: right;
+	padding: 6rem 1rem 0 1rem !important;
+}
+
+.ov-auto {
+	height: 32rem;
+}
+
+.static,
+.ov-auto {
+	overflow-y: auto;
+	scrollbar-color: rgb(170, 170, 170) rgba(220, 220, 220, 0.5);
+  scrollbar-width: thin;
+}
+
+.static::-webkit-scrollbar,
+.ov-auto::-webkit-scrollbar {
+	-webkit-appearance: none;
+}
+
+.static::-webkit-scrollbar:vertical,
+.ov-auto::-webkit-scrollbar:vertical {
+	width:10px;
+}
+
+.static::-webkit-scrollbar-button:increment,
+.static::-webkit-scrollbar-button,
+.ov-auto::-webkit-scrollbar-button:increment,
+.ov-auto::-webkit-scrollbar-button {
+	display: none;
+} 
+
+.static::-webkit-scrollbar:horizontal,
+.ov-auto::-webkit-scrollbar:horizontal {
+	height: 10px;
+}
+
+.static::-webkit-scrollbar-thumb,
+.ov-auto::-webkit-scrollbar-thumb {
+	background-color: #aaa;
+	border-radius: 20px;
+	border: 2px solid #fff;
+	border-bottom: 0;
+	border-top: 0;
+}
+
+.static::-webkit-scrollbar-track,
+.ov-auto::-webkit-scrollbar-track {
+	border-radius: 10px;
+	background: #dcdcdc;
+	border: 2px solid #fff;
+}
+
+.content-margin-t1 {
+	margin-top: 0 !important;
+}
+
+@media (max-width: 1199.98px) {
+	.content-margin-t1 {
+		margin-top: 4rem !important;
+	}
+}
+
+.active-option {
+	background-color: #CCD2F2;
+}
+
+.main-menu.menu-light .navigation > li > ul {
+	background: transparent;
+}
+
+.main-menu.menu-light .navigation > li.open > a,
+.main-menu.menu-light .navigation > li.sidebar-group-active > a {
+	background: transparent;
 }

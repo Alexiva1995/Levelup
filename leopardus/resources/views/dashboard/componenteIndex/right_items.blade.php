@@ -1,4 +1,4 @@
-<div class="col-12">
+<div class="col-12 dynamic">
    <div class="row">
       <div class="col-12 col-md-12 row">
          <div class="col-12 col-md-12 mt-2">
@@ -7,9 +7,13 @@
                <div class="card-content">
                   <div class="card-body padding-card">
                      <div class="row">
-                        {{-- <div class="card-header">
-                           ...
-                        </div> --}}
+                        <div class="col-12 card-header-t2">
+                           <div class="float-right" >
+                              <a class="icon-card-header-t2" href="#">
+                                 <i class="ficon feather icon-more-horizontal"></i>
+                              </a>
+                           </div>
+                        </div>
                         <div class="col-12 mt-2 text-center" onclick="copyToClipboard('copy')"
                            style="margin-top: 1rem !important;">
                            <button type="button" class="btn bg-orange-alt text-white">
@@ -53,7 +57,7 @@
          <div class="col-12 col-md-12 mt-2">
             <h5 class="title-card mb-1">Nuevos Miembros</h5>
             <div class="card">
-               <div class="card-content">
+               <div class="card-content ov-auto">
                   <div class="card-body padding-card-member">
                      {{-- @foreach ($new_member as $member)
                         <div class="d-flex justify-content-start align-items-center mb-1">
