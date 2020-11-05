@@ -25,3 +25,5 @@
 {{-- BEGIN: Custom JS --}}
 @stack('custom_js')
 {{-- END: Custom js --}}
+
+<script src="{{asset('assets/js/scripts.js')}}"></script>

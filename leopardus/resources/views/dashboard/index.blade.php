@@ -3,12 +3,18 @@
 @section('content')
 <div class="contai2">
 	<div class="row">
+		<div class="col-12 col-md-8 static">
+			@include('dashboard.componenteIndex.left_items')
+		</div>
+		<div class="col-12 col-md-4">
+			@include('dashboard.componenteIndex.right_items')
+		</div>
 		{{-- primeros cuadro --}}
-		@include('dashboard.componenteIndex.first_square')
+		{{-- @include('dashboard.componenteIndex.first_square') --}}
 		{{-- secundo cuadro --}}
 		{{-- @include('dashboard.componenteIndex.second_square') --}}
 		{{-- tecer cuadro --}}
-		@include('dashboard.componenteIndex.third_square')
+		{{-- @include('dashboard.componenteIndex.third_square') --}}
 	</div>
 </div>
 
