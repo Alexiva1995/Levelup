@@ -164,12 +164,14 @@ class HomeController extends Controller
             // 'country' => $llave->country,
             'rol_id' => $llave->rol_id,
             'status' => $llave->status,
-            'nombre_referido' => $usuario['display_name'],
-            'phone' => $masinfo->phone
+            // 'nombre_referido' => $usuario['display_name'],
+            'phone' => $masinfo->phone,
+            'fecha_activacion' => $llave->fecha_activacion
           ]);
         }
 
-        return view('admin.userRecords')->with(compact('datos'));
+        // return view('admin.userRecords')->with(compact('datos'));
+        return view('admin.userRecords_t2')->with(compact('datos'));
     }
 
     public function changePorcent()
