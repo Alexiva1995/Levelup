@@ -64,7 +64,8 @@ class WalletController extends Controller
 			$cuentawallet = $cuentawallet->paypal;
 		// }
 		
-	   	return view('wallet.indexwallet')->with(compact('metodopagos', 'comisiones', 'wallets', 'moneda', 'cuentawallet', 'pagosPendientes'));
+			//  return view('wallet.indexwallet')->with(compact('metodopagos', 'comisiones', 'wallets', 'moneda', 'cuentawallet', 'pagosPendientes'));
+			return view('wallet.indexwallet_t2')->with(compact('metodopagos', 'comisiones', 'wallets', 'moneda', 'cuentawallet', 'pagosPendientes'));
 	}
 
 	/**
