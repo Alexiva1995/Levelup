@@ -44,8 +44,10 @@ class AdminController extends Controller
     {
         $comision = new ComisionesController;
         $barra = $comision->getRestricionBono(Auth::user()->ID);
+        $total_ventas = $this->totalVentasReferidos();
+        $total_comision = $this->totalVentasComision();
+
         if (Auth::user()->ID == 2) {
-            
             $comision->clubBono(Auth::user()->ID);
         }
         
@@ -211,7 +213,7 @@ class AdminController extends Controller
         return view('dashboard.index')->with(compact(
             'cantReferidosDirectos', 'cantReferidosIndirectos', 'cantReferidosActivos', 'fechaProxActivacion', 'new_member',
             'fullname', 'permiso', 'moneda',
-            'rolActual', 'rolSig', 'puntosRed', 'img_rolActual', 'img_rolSig', 'rentabilidad', 'ganancias', 'namePack', 'barra'
+            'rolActual', 'rolSig', 'puntosRed', 'img_rolActual', 'img_rolSig', 'rentabilidad', 'ganancias', 'namePack', 'barra','total_ventas','total_comision'
             ));
 
     }
@@ -1085,6 +1087,58 @@ class AdminController extends Controller
             
     //     }
     // }
+
+    public function totalVentasReferidos() {
+        $comision = new ComisionesController;
+        $funciones = new IndexController;
+        $GLOBALS['allUsers'] = [];
+        $referidosDirectos = $funciones->getReferreds(Auth::user()->ID);
+        $funciones->getReferredsAll($referidosDirectos, 1, 4, [], 'arbol');
+        $TodosReferidos = $funciones->ordenarArreglosMultiDimensiones_asc($GLOBALS['allUsers'], 'nivel');
+        $totalVentas = array("nivel1" => 0, "nivel2" => 0, "nivel3" => 0, "nivel4" => 0);
+        $nivel = 1;
+        foreach ($TodosReferidos as $referido) {
+            if ($nivel <= 4) {
+                if ($referido['nivel'] == $nivel) {
+                    $compras = $comision->getShopping($referido['ID']);
+                    foreach ($compras as $compra ) {
+                        $detelles = $comision->getShoppingDetails($compra->post_id);
+                        if ($detelles->post_status == 'wc-completed') {
+                            $totalVentas['nivel'.$nivel] += $comision->getShoppingTotal($compra->post_id);
+                        }
+                    }
+                }
+                else {
+                    $nivel++;
+                }
+            }
+        }
+        return $totalVentas;
+    }
+
+    public function totalVentasComision() {
+        $funciones = new IndexController;
+        $GLOBALS['allUsers'] = [];
+        $referidosDirectos = $funciones->getReferreds(Auth::user()->ID);
+        $funciones->getReferredsAll($referidosDirectos, 1, 4, [], 'arbol');
+        $TodosReferidos = $funciones->ordenarArreglosMultiDimensiones_asc($GLOBALS['allUsers'], 'nivel');
+        $totalComision = array("nivel1" => 0, "nivel2" => 0, "nivel3" => 0, "nivel4" => 0);
+        $nivel = 1;
+        foreach ($TodosReferidos as $referido) {
+            if ($nivel <= 4) {
+                if ($referido['nivel'] == $nivel) {
+                    $totalComision['nivel'.$nivel] = Wallet::where([
+                        ['iduser', '=', $referido['ID']],
+                        ['descripcion', '!=', 'Pago Rechazado por el Administrador']
+                    ])->get()->sum('debito');
+                }
+                else {
+                    $nivel++;
+                }
+            }
+        }
+        return $totalComision;
+    }
 
 }
 

@@ -541,6 +541,18 @@ class IndexController extends Controller
         };
     }
 
+    public function ordenarArreglosMultiDimensiones_asc($arreglo, $forma)
+    {
+        usort($arreglo, $this->sort_by_orden($forma));
+        return $arreglo;
+    }
+
+    private function sort_by_orden($forma) {
+        return function ($a, $b) use ($forma) {
+            return $a[$forma] - $b[$forma] ;
+        };
+    }
+
     /**
      * Obtiene todas las ventas de la red
      * 
