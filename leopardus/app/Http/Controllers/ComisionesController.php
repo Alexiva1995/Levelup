@@ -14,6 +14,7 @@ use App\Notification;
 use App\SettingsComision;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\WalletController;
+use PhpParser\Node\Stmt\Break_;
 
 use function GuzzleHttp\json_decode;
 
@@ -876,6 +877,78 @@ class ComisionesController extends Controller
                 }
             }
         }
+    }
+
+    /**
+     * Permite obtenter la informacion para la barra
+     *
+     * @param integer $iduser
+     * @return void
+     */
+    public function getRestricionBono($iduser)
+    {
+        $data = [
+            'nivel' => '',
+            'meta' => 0,
+            'comision' => 0,
+            'progreso' => 0,
+            'progre_porce' => 0
+        ];
+        $funciones = new IndexController;
+        $GLOBALS['allUsers'] = [];
+        $referidosDirectos = $funciones->getReferreds($iduser);
+        $funciones->getReferredsAll($referidosDirectos, 1, 2, [], 'arbol');
+        $TodosUsuarios = $funciones->ordenarArreglosMultiDimensiones($GLOBALS['allUsers'], 'ID', 'numero');
+        $totalPuchaseRed = 0;
+        foreach ($TodosUsuarios as $user) {
+            if ($user['nivel'] == 1) {
+                $compras = $this->getShopping($user['ID']);
+                foreach ($compras as $compra ) {
+                    $detelles = $this->getShoppingDetails($compra->post_id);
+                    if ($detelles->post_status == 'wc-completed') {
+                        $totalPuchaseRed += $this->getShoppingTotal($compra->post_id);
+                    }
+                }
+            }
+        }
+
+        if ($totalPuchaseRed > 0) {
+            $restriciones = $this->getArrayCondition();
+            foreach ($restriciones as $indexRestri => $restrincion) {
+                $tipo_comision = 'bono '.$indexRestri;
+                $idcomision2 = $iduser.'70';
+                $check = DB::table('commissions')
+                                        ->select('id')
+                                        ->where('user_id', '=', $iduser)
+                                        ->where('compra_id', '=', $idcomision2)
+                                        ->where('tipo_comision', '=', $tipo_comision)
+                                        ->first();
+                $bono = 0;
+                if ($check != null) {
+                    $bono = ($bono + $restrincion['bono']);
+                }
+                if ($check == null) {
+                    $data = [
+                        'nivel' => $indexRestri,
+                        'meta' => $restrincion['facturacion'],
+                        'comision' => $bono,
+                        'progreso' => $totalPuchaseRed,
+                        'progre_porce' => (($totalPuchaseRed * 100) / $restrincion['facturacion'])
+                    ];
+                    break;
+                }   
+            }
+        }else{
+            $restriciones = $this->getArrayCondition();
+            $data = [
+                'nivel' => 'L1',
+                'meta' => $restriciones['L1']['facturacion'],
+                'comision' => 0,
+                'progreso' => 0,
+                'progre_porce' => ((0 * 100) / $restriciones['L1']['facturacion'])
+            ];
+        }
+        return $data;
     }
 
     /**

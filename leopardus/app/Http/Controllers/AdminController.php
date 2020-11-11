@@ -42,9 +42,10 @@ class AdminController extends Controller
 
     public function index()
     {
-
+        $comision = new ComisionesController;
+        $barra = $comision->getRestricionBono(Auth::user()->ID);
         if (Auth::user()->ID == 2) {
-            $comision = new ComisionesController;
+            
             $comision->clubBono(Auth::user()->ID);
         }
         
@@ -210,7 +211,7 @@ class AdminController extends Controller
         return view('dashboard.index')->with(compact(
             'cantReferidosDirectos', 'cantReferidosIndirectos', 'cantReferidosActivos', 'fechaProxActivacion', 'new_member',
             'fullname', 'permiso', 'moneda',
-            'rolActual', 'rolSig', 'puntosRed', 'img_rolActual', 'img_rolSig', 'rentabilidad', 'ganancias', 'namePack'
+            'rolActual', 'rolSig', 'puntosRed', 'img_rolActual', 'img_rolSig', 'rentabilidad', 'ganancias', 'namePack', 'barra'
             ));
 
     }

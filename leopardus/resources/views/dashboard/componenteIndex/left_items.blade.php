@@ -18,15 +18,15 @@
                                 {{-- <div class="progress-bar" role="progressbar" aria-valuenow="{{$rentabilidad}}" aria-valuemin="0" aria-valuemax="100" style="width:{{$rentabilidad}}%">
                                     {{$rentabilidad}}%
                                 </div> --}}
-                                <div class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:50%">
-                                    497 USD
+                                <div class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:{{$barra['progre_porce']}}%">
+                                    {{$barra['progreso']}} USD
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12 col-md-9">
-                                    <p class="mb-0"> Nivel actual: <strong class="p-blue">0</strong></p>
-                                    <p class="mb-0"> Comisiones recibidas: <strong class="p-blue">0 USD</strong></p>
-                                    <p class="mb-0"> Puntos para logro de meta: <strong class="p-blue">0 USD</strong></p>
+                                    <p class="mb-0"> Nivel actual: <strong class="p-blue">{{$barra['nivel']}}</strong></p>
+                                    <p class="mb-0"> Comisiones recibidas: <strong class="p-blue">{{$barra['comision']}} USD</strong></p>
+                                    <p class="mb-0"> Puntos para logro de meta: <strong class="p-blue">{{$barra['meta']}} USD</strong></p>
                                 </div>
                                 <div class="col-12 col-md-3">
                                     <button type="button" class="btn bg-orange-alt text-white btn-progress">Detalles</button>   
