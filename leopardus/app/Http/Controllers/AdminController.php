@@ -45,7 +45,7 @@ class AdminController extends Controller
         $comision = new ComisionesController;
         $barra = $comision->getRestricionBono(Auth::user()->ID);
         $total_ventas = $this->totalVentasReferidos();
-        $total_comision = $this->totalVentasComision();
+        $total_comision = $this->totalComisionReferidos();
 
         if (Auth::user()->ID == 2) {
             $comision->clubBono(Auth::user()->ID);
@@ -120,20 +120,13 @@ class AdminController extends Controller
         }
 
         // Informacion del Index
-
             $informacion = new IndexController;
-
             // obtiene a los nuevos miembros de los usuarios
-
-            if (Auth::user()->ID != 1) {
-
+            // if (Auth::user()->ID != 1) {
                 $new_member = $informacion->newMembers(Auth::user()->ID);
-
-            }else{
-
-                $new_member = User::select('display_name as nombre', 'created_at as fecha', 'avatar')->get()->sortByDesc('created_at')->take(7)->toArray();
-
-            }
+            // }else{
+                // $new_member = User::select('display_name as nombre', 'created_at as fecha', 'avatar', 'paquete')->get()->sortByDesc('created_at')->take(5)->toArray();
+            // }
 
             $ganancias = Wallet::where([
                 ['iduser', '=', Auth::user()->ID],
@@ -1116,7 +1109,7 @@ class AdminController extends Controller
         return $totalVentas;
     }
 
-    public function totalVentasComision() {
+    public function totalComisionReferidos() {
         $funciones = new IndexController;
         $GLOBALS['allUsers'] = [];
         $referidosDirectos = $funciones->getReferreds(Auth::user()->ID);
