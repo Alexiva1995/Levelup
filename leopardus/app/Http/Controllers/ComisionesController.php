@@ -976,7 +976,7 @@ class ComisionesController extends Controller
                 'bono' => 234
             ],
             'L5' => [
-                'facturacion' => 4700,
+                'facturacion' => 4720,
                 'bono' => 234
             ],
             'L6' => [

@@ -1122,7 +1122,7 @@ class AdminController extends Controller
                 if ($referido['nivel'] == $nivel) {
                     $totalComision['nivel'.$nivel] = Wallet::where([
                         ['iduser', '=', $referido['ID']],
-                        ['descripcion', '!=', 'Pago Rechazado por el Administrador']
+                        ['descripcion', 'like', '%Bonos Liderazgo%']
                     ])->get()->sum('debito');
                 }
                 else {
