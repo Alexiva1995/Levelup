@@ -14,13 +14,11 @@
                         <img src="{{ asset('avatar/'.Auth::user()->avatar) }}" alt="avtar img holder" height="100" width="100">
                      </div>
                </div>
-               <h5 class="title-card">Welcome!</h5>
+               <h5 class="title-card">Bienvenido!</h5>
                <h2 class="text-center name">{{Auth::user()->display_name}}</h2>
-               <div class="chip chip-sidebar"> Profile 62% completed </div>
+               <div class="chip chip-sidebar"> Perfil % Completado </div>
                <div class="icon-sidebar">
-                     <a><i class="feather icon-bell"></i></a>
                      <a href="{{ route('admin.user.edit') }}"><i class="feather icon-edit-2"></i></a>
-                     <a><i class="feather icon-mail"></i></a>
                </div>
             </div>
          </li>
@@ -42,11 +40,13 @@
                <ul class="sub-menu">
                   <li class="nav-item">
                      <a href="{{url('mioficina/tienda')}}" class="nav-link">
+                        <i class="feather icon-circle"></i>
                         <span class="title">Tienda</span>
                      </a>
                   </li>
                   <li class="nav-item">
                      <a href="{{route('listProduct')}}" class="nav-link">
+                        <i class="feather icon-circle"></i>
                         <span class="title">Productos</span>
                      </a>
                   </li>
@@ -68,21 +68,25 @@
                <ul class="sub-menu">
                   <li class="nav-item">
                      <a href="{{url('mioficina/admin/transactions/networkorders')}}" class="nav-link">
+                        <i class="feather icon-circle"></i>
                         <span class="title">Ordenes de Red</span>
                      </a>
                   </li>
                   <li class="nav-item">
                      <a href="{{url('mioficina/admin/transactions/personalorders')}}" class="nav-link">
+                        <i class="feather icon-circle"></i>
                         <span class="title">Ordenes Personales</span>
                      </a>
                   </li>
                   <li class="nav-item">
                      <a href="{{url('mioficina/admin/price/historial')}}" class="nav-link">
+                        <i class="feather icon-circle"></i>
                         <span class="title">Historial de Retiro</span>
                      </a>
                   </li>
                   <li class="nav-item">
                      <a href="{{url('mioficina/admin/price/confirmar')}}" class="nav-link">
+                        <i class="feather icon-circle"></i>
                         <span class="title">Confirmar Pagos</span>
                      </a>
                   </li>
@@ -99,21 +103,25 @@
                <ul class="sub-menu">
                   <li class="nav-item">
                      <a href="{{route('autenticacion.new-register').'?referred_id='.Auth::user()->ID}}" class="nav-link">
+                        <i class="feather icon-circle"></i>
                         <span class="title">Nuevo Usuario</span>
                      </a>
                   </li>
                   {{-- <li class="nav-item">
                      <a href="{{url('mioficina/referraltree')}}" class="nav-link">
-                     <span class="title">Árbol de Usuarios</span>
+                        <i class="feather icon-circle"></i>
+                        <span class="title">Árbol de Usuarios</span>
                      </a>
                   </li> --}}
                   <li class="nav-item">
                      <a href="{{url('mioficina/admin/network/directrecords')}}" class="nav-link">
+                        <i class="feather icon-circle"></i>
                         <span class="title">Lista de Directos</span>
                      </a>
                   </li>
                   <li class="nav-item">
                      <a href="{{url('mioficina/admin/network/networkrecords')}}" class="nav-link">
+                        <i class="feather icon-circle"></i>
                         <span class="title">Usuarios en Red</span>
                      </a>
                   </li>
@@ -167,31 +175,37 @@
                <ul class="sub-menu">
                   <li class="nav-item">
                      <a href="{{url('mioficina/admin/info/perfil')}}" class="nav-link">
+                        <i class="feather icon-circle"></i>
                         <span class="title">Perfil</span>
                      </a>
                   </li>
                   <li class="nav-item">
                      <a href="{{url('mioficina/admin/info/ventas')}}" class="nav-link">
+                        <i class="feather icon-circle"></i>
                         <span class="title">Ventas</span>
                      </a>
                   </li>
                   <li class="nav-item">
                      <a href="{{url('mioficina/admin/info/rango')}}" class="nav-link">
+                        <i class="feather icon-circle"></i>
                         <span class="title">Rangos</span>
                      </a>
                   </li>
                   <li class="nav-item">
                      <a href="{{url('mioficina/admin/info/pagos')}}" class="nav-link">
+                        <i class="feather icon-circle"></i>
                         <span class="title">Pagos</span>
                      </a>
                   </li>
                   <li class="nav-item">
                      <a href="{{url('mioficina/admin/info/feed')}}" class="nav-link">
+                        <i class="feather icon-circle"></i>
                         <span class="title">Descuentos</span>
                      </a>
                   </li>
                   <li class="nav-item">
                      <a href="{{url('mioficina/admin/info/comisiones')}}" class="nav-link">
+                        <i class="feather icon-circle"></i>
                         <span class="title">Comisiones</span>
                      </a>
                   </li>
@@ -209,6 +223,7 @@
             <ul class="sub-menu">
                <li class="nav-item">
                   <a href="{{url('mioficina/admin/ticket/todosticket')}}" class="nav-link">
+                     <i class="feather icon-circle"></i>
                      <span class="title">Todos los Tickets</span>
                   </a>
                </li>
