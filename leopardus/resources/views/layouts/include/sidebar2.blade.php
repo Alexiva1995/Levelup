@@ -16,7 +16,7 @@
                     </div>
                     <h5 class="title-card">Bienvenido!</h5>
                     <h2 class="text-center name">{{Auth::user()->display_name}}</h2>
-                    <div class="chip chip-sidebar"> Perfil % Completado </div>
+                    <div class="chip chip-sidebar"> Perfil {{$percentage}}% completado </div>
                     <div class="icon-sidebar">
                         <a href="{{ route('admin.user.edit') }}"><i class="feather icon-edit-2"></i></a>
                     </div>
