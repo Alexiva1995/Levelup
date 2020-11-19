@@ -14,13 +14,11 @@
                             <img src="{{ asset('avatar/'.Auth::user()->avatar) }}" alt="avtar img holder" height="100" width="100">
                         </div>
                     </div>
-                    <h5 class="title-card">Welcome!</h5>
+                    <h5 class="title-card">Bienvenido!</h5>
                     <h2 class="text-center name">{{Auth::user()->display_name}}</h2>
-                    <div class="chip chip-sidebar"> Profile 62% completed </div>
+                    <div class="chip chip-sidebar"> Perfil {{$percentage}}% completado </div>
                     <div class="icon-sidebar">
-                        <a><i class="feather icon-bell"></i></a>
                         <a href="{{ route('admin.user.edit') }}"><i class="feather icon-edit-2"></i></a>
-                        <a><i class="feather icon-mail"></i></a>
                     </div>
                 </div>
             </li>

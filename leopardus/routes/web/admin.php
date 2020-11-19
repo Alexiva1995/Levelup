@@ -45,7 +45,7 @@ Route::group(['prefix' => 'autentication'], function (){
 
 // Tienda Online
 
-Route::group(['prefix' => 'tienda', 'middleware' => ['auth', 'licencia', 'guest']], function (){
+Route::group(['prefix' => 'tienda', 'middleware' => ['auth', 'licencia', 'guest', 'profile.status']], function (){
 
     Route::get('/', 'TiendaController@index')->name('tienda-index');
 
@@ -73,7 +73,7 @@ Route::group(['prefix' => 'tienda', 'middleware' => ['auth', 'licencia', 'guest'
 
 
 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'guest']], function() {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'guest', 'profile.status']], function() {
 
   Route::put('changeside', 'HomeController@changeSide')->name('change.side');
 
