@@ -1112,7 +1112,8 @@ class AdminController extends Controller
     public function totalComisionReferidos() {
         $funciones = new IndexController;
         $GLOBALS['allUsers'] = [];
-        $referidosDirectos = $funciones->getReferreds(Auth::user()->ID);
+        $iduser = Auth::user()->ID;
+        $referidosDirectos = $funciones->getReferreds($iduser);
         $funciones->getReferredsAll($referidosDirectos, 1, 4, [], 'arbol');
         $TodosReferidos = $funciones->ordenarArreglosMultiDimensiones_asc($GLOBALS['allUsers'], 'nivel');
         $totalComision = array("nivel1" => 0, "nivel2" => 0, "nivel3" => 0, "nivel4" => 0);
@@ -1121,7 +1122,7 @@ class AdminController extends Controller
             if ($nivel <= 4) {
                 if ($referido['nivel'] == $nivel) {
                     $totalComision['nivel'.$nivel] = Wallet::where([
-                        ['iduser', '=', $referido['ID']],
+                        ['iduser', '=', $iduser],
                         ['descripcion', 'like', '%Bonos Liderazgo%']
                     ])->get()->sum('debito');
                 }

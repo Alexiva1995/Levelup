@@ -912,8 +912,10 @@ class ComisionesController extends Controller
             }
         }
 
+
         if ($totalPuchaseRed > 0) {
             $restriciones = $this->getArrayCondition();
+            $bono = 0;
             foreach ($restriciones as $indexRestri => $restrincion) {
                 $tipo_comision = 'bono '.$indexRestri;
                 $idcomision2 = $iduser.'70';
@@ -923,7 +925,7 @@ class ComisionesController extends Controller
                                         ->where('compra_id', '=', $idcomision2)
                                         ->where('tipo_comision', '=', $tipo_comision)
                                         ->first();
-                $bono = 0;
+
                 if ($check != null) {
                     $bono = ($bono + $restrincion['bono']);
                 }
