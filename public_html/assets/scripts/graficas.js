@@ -38,7 +38,7 @@ function barChart(data) {
             height: 350,
             type: 'bar',
         },
-        colors: ['#00646d'],
+        colors: ['#001CBD'],
         plotOptions: {
             bar: {
                 horizontal: false,

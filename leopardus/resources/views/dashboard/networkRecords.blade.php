@@ -1,6 +1,11 @@
 @extends('layouts.dashboard')
 
 @section('content')
+<div class="col-12 col-md-12 my-1 px-0">
+	<h5 class="title-card">Red de usuarios</h5>
+	<h6 class="subtitle-card">Membresía</h6>
+	<h1 class="title-card title-grand-t1 mt-1 mb-3">CLUB TRADER MEMBERSHIP</h1>
+</div>
 {{-- option datatable --}}
 @include('dashboard.componentView.optionDatatable')
 
@@ -34,11 +39,12 @@
 </div>
 
 
-<div class="card">
+<div class="card no-border">
 	<div class="card-content">
-		<div class="card-body">
+		<div class="card-body pl-0 pr-0">
+			<h5 class="title-card">Link Referido</h5>
 			<div class="table-responsive">
-				<table id="mytable" class="table zero-configuration">
+				<table id="table_tab" class="table zero-configuration cell-border">
 					<thead>
 						<tr>
 							<th>ID</th>

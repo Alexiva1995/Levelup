@@ -24,6 +24,23 @@
 				'csv', 'pdf', 'print', 'excel'
 			]
 		});
+
+		$('#table_tab').DataTable({
+			dom: 'Bfrtip',
+			responsive: true,
+			buttons: [
+				{
+					text: 'Copiar Link',
+					action: function ( e, dt, node, config ) {
+						alert( 'Button activated' );
+					}
+				}
+			],
+			language: {
+				search: '',
+				searchPlaceholder: "Membresía"
+			}
+		});
 	
 		$('#tab').DataTable({
 			dom: 'Bfrtip',

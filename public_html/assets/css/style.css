@@ -20,11 +20,12 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
 	margin-bottom: 0.5rem;
 }
 
-.card button {
-	border-radius: 50px;
+button, .card button {
+	border-radius: 50px !important;
 	background: -prefix-linear-gradient(left,#001CBD, #005);
 	background: linear-gradient(to right, #001CBD, #005);
 	text-transform: uppercase;
+	color: #fff !important;
 }
 
 .text-card-blue {
@@ -370,7 +371,8 @@ a.icon-card-header-t2 i {
 }
 
 #tab_filter .form-control,
-#mytable_filter .form-control {
+#mytable_filter .form-control,
+#table_tab_filter .form-control {
 	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' aria-hidden='true' focusable='false' width='1em' height='1em' style='-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);' preserveAspectRatio='xMidYMid meet' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23626262' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='M21 21l-4.35-4.35'/%3E%3C/g%3E%3C/svg%3E");
 	background-repeat: no-repeat;
 	background-position: 175px 9px !important;
@@ -387,19 +389,22 @@ input[type="search" i]::-webkit-search-cancel-button {
 }
 
 div#tab_filter.dataTables_filter,
-div#mytable_filter.dataTables_filter {
+div#mytable_filter.dataTables_filter,
+div#table_tab_filter.dataTables_filter {
 	width: max-content;
 	float: right;
 	margin-bottom: 20px;
 }
 
 #tab_wrapper .dt-buttons.btn-group,
-#mytable_wrapper .dt-buttons.btn-group {
+#mytable_wrapper .dt-buttons.btn-group,
+#table_tab_wrapper .dt-buttons.btn-group {
 	margin-bottom: 20px;
 }
 
 div#tab_filter.dataTables_filter label,
-div#mytable_filter.dataTables_filter label {
+div#mytable_filter.dataTables_filter label,
+div#table_tab_filter.dataTables_filter label {
 	margin-top: 0;
 }
 
@@ -563,4 +568,34 @@ div.dataTables_wrapper button {
 
 .justify-center{
 	justify-content: center;
+}
+
+.no-border {
+	border: none;
+}
+
+.dataTables_length {
+	margin-bottom: 20px;
+}
+
+.dataTables_wrapper .dt-buttons.btn-group button {
+	margin-right: 10px;
+}
+
+.dataTables_wrapper .dt-buttons.btn-group button:last-child {
+	margin-right: 0;
+}
+
+.buttons-csv,
+.buttons-pdf,
+.buttons-print {
+	width: 100% !important;
+}
+
+.main-menu.menu-light .navigation li a {
+	padding: 10px 15px 10px 25px;
+}
+
+.btn-tab-cell {
+	width: 70px !important;
 }

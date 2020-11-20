@@ -29,7 +29,8 @@ class WalletController extends Controller
 	 * @return view
 	 */
 	public function index(){
-	   
+	   $comision = new ComisionesController;
+      $barra = $comision->getRestricionBono(Auth::user()->ID);
 		$moneda = Monedas::where('principal', 1)->get()->first();
 		$metodopagos = MetodoPago::all();
 		$comisiones = SettingsComision::select('comisionretiro', 'comisiontransf')->where('id', 1)->get();
@@ -62,10 +63,14 @@ class WalletController extends Controller
 				])->get();
 			$cuentawallet = DB::table('user_campo')->where('ID', Auth::user()->ID)->select('paypal')->get()[0];
 			$cuentawallet = $cuentawallet->paypal;
+			$ganancias = Wallet::where([
+				['iduser', '=', Auth::user()->ID],
+				['descripcion', '!=', 'Pago Rechazado por el Administrador']
+		  ])->get()->sum('debito');
 		// }
 		
 			//  return view('wallet.indexwallet')->with(compact('metodopagos', 'comisiones', 'wallets', 'moneda', 'cuentawallet', 'pagosPendientes'));
-			return view('wallet.indexwallet_t2')->with(compact('metodopagos', 'comisiones', 'wallets', 'moneda', 'cuentawallet', 'pagosPendientes'));
+		return view('wallet.indexwallet_t2')->with(compact('metodopagos', 'comisiones', 'wallets', 'moneda', 'cuentawallet', 'pagosPendientes', 'ganancias', 'barra'));
 	}
 
 	/**

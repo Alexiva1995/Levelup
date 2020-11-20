@@ -47,9 +47,11 @@
                     <h2 class="text-card-blue mt-1 mb-2">
                         <sup>$</sup> {{number_format(Auth::user()->wallet_amount, 2, ',', '.')}} <sup>USD</sup>
                     </h2>
-                    <button type="button" class="btn bg-orange-alt text-white" style="margin-top: 20px;">
-                        Solicitar retiro
-                     </button>
+                     @if (Auth::user()->rol_id != 0)
+                        <button type="button" class="btn bg-orange-alt text-white" style="margin-top: 20px;" data-toggle="modal" data-target="#myModalRetiro">
+                              Solicitar retiro
+                        </button>
+                     @endif
                 </div>
             </div>
         </div>

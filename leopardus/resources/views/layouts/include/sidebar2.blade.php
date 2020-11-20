@@ -38,7 +38,7 @@
             </li>
             {{--FIN RANKING --}}
             {{-- TRANSACCIONES --}}
-            {{-- <li class="nav-item menu_item_">
+            <li class="nav-item menu_item_">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="feather icon-activity"></i>
                     <span class="title">Movimientos</span>
@@ -64,21 +64,20 @@
                         </a>
                     </li>
                 </ul>
-            </li> --}}
+            </li>
             {{--FIN TRANSACCIONES --}}
 
             {{-- GEONOLOGIA --}}
             <li class="nav-item menu_item_">
-                {{-- <a href="javascript:;" class="nav-link nav-toggle"> --}}
-                <a href="{{url('mioficina/admin/userrecords')}}" class="nav-link nav-toggle">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                {{-- <a href="{{url('mioficina/admin/userrecords')}}" class="nav-link nav-toggle"> --}}
                     <i class="feather icon-users"></i>
                     <span class="title">Red de Usuarios</span>
                     <span class="arrow"></span>
                 </a>
-                {{-- <ul class="sub-menu">
+                <ul class="sub-menu">
                     <li class="nav-item">
-                        <a href="{{route('autenticacion.new-register').'?referred_id='.Auth::user()->ID}}"
-                            class="nav-link">
+                        <a href="{{route('autenticacion.new-register').'?referred_id='.Auth::user()->ID}}" class="nav-link">
                             <i class="feather icon-circle"></i>
                             <span class="title">Nuevo Usuario</span>
                         </a>
@@ -95,26 +94,25 @@
                             <span class="title">Registros en Red</span>
                         </a>
                     </li>
-                </ul> --}}
+                </ul>
             </li>
             {{-- FIN GENEALOGIA --}}
 
             {{--INICIO BILLETERA --}}
             <li class="nav-item menu_item_">
-                {{-- <a href="javascript:;" class="nav-link nav-toggle"> --}}
-                <a href="{{url('mioficina/admin/wallet/')}}" class="nav-link nav-toggle">
+                <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="feather icon-trending-up"></i>
                     <span class="title">Billetera</span>
                     <span class="arrow"></span>
                 </a>
-                {{-- <ul class="sub-menu">
+                <ul class="sub-menu">
                     <li class="nav-item">
                         <a href="{{url('mioficina/admin/wallet/')}}" class="nav-link">
                             <i class="feather icon-circle"></i>
                             <span class="title">Retiros</span>
                         </a>
                     </li>
-                </ul> --}}
+                </ul>
             </li>
             {{-- FIN BILLETERA --}}
 
@@ -149,7 +147,7 @@
 
             {{-- FIN GESTION DE PERFILES --}}
             {{-- INICIO TICKETS --}}
-            {{-- <li class="nav-item menu_item_">
+            <li class="nav-item menu_item_">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="feather icon-message-square"></i>
                     <span class="title">Soporte</span>
@@ -169,7 +167,7 @@
                         </a>
                     </li>
                 </ul>
-            </li> --}}
+            </li>
             {{-- FIN TICKETS --}}
 
             {{-- CERRAR SESIÓN --}}

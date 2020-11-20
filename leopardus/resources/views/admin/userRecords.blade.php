@@ -7,11 +7,11 @@
 {{-- alertas --}}
 @include('dashboard.componentView.alert')
 
-<div class="card">
+<div class="card no-border">
 	<div class="card-content">
-		<div class="card-body">
+		<div class="card-body pl-0 pr-0">
 			<div class="table-responsive">
-				<table id="mytable" class="table zero-configuration">
+				<table id="mytable" class="table zero-configuration cell-border">
 					<thead>
 						<tr>
 							<th class="text-center">
@@ -29,9 +29,9 @@
 							<th class="text-center">
 								Pais
 							</th>
-							<th class="text-center">
+							{{-- <th class="text-center">
 								Referido por
-							</th>
+							</th> --}}
 							{{-- <th class="text-center">
 								Rango
 							</th> --}}
@@ -74,10 +74,10 @@
 								{{ $fal->pais }}
 								@endforeach
 							</td>
-							<td class="text-center">
+							{{-- <td class="text-center">
 								{{ $usuario['nombre_referido'] }}
-							</td>
-{{-- 
+							</td> --}}
+							{{-- 
 							<td class="text-center">
 
 								@foreach($roles as $rol)
@@ -99,15 +99,15 @@
 							</td>
 							<td class="text-center">
 								<a class="btn btn-info" href="{{ route('admin.useredit', $usuario['ID']) }}">
-									<i class="fa fa-edit"></i></a>
+									<i class="fa fa-edit"></i>
+								</a>
 
 								@if($usuario['ID'] != 1)
-								<button class="btn btn-danger" value="{{$usuario['ID']}}"
+								<button class="btn btn-danger btn-tab-cell" value="{{$usuario['ID']}}"
 									onclick="eliminarProducto(this.value)">
 									<i class="fa fa-trash"></i>
 								</button>
 								@endif
-
 							</td>
 						</tr>
 						@endforeach

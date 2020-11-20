@@ -59,7 +59,7 @@
             </li>
             {{-- FIN TIENDA INTERNA --}}
             {{-- TRANSACCIONES --}}
-            {{-- <li class="nav-item menu_item_">
+            <li class="nav-item menu_item_">
                <a href="javascript:;" class="nav-link nav-toggle">
                   <i class="feather icon-activity"></i>
                   <span class="title">Movimientos</span>
@@ -91,7 +91,7 @@
                      </a>
                   </li>
                </ul>
-            </li> --}}
+            </li>
             {{--FIN TRANSACCIONES --}}
             {{-- RED DE USUARIO --}}
             <li class="nav-item menu_item_">
@@ -155,11 +155,13 @@
          {{-- LISTA DE USUARIOS--}}
          <li class="menu_item_">
             <a href="{{url('mioficina/admin/userrecords')}}" class="nav-link nav-toggle">
+               <i class="feather icon-users"></i>
                <span class="title">Lista de Usuarios</span>
             </a>
          </li>
          <li class="menu_item_">
             <a href="{{route('admin.userinactive')}}" class="nav-link nav-toggle">
+               <i class="feather icon-user-x"></i>
                <span class="title">Usuarios Inactivos</span>
             </a>
          </li>
@@ -214,7 +216,7 @@
             {{-- FIN GESTION DE PERFILES --}}
          @endif
          {{-- INICIO TICKETS --}}
-         {{-- <li class="nav-item menu_item_">
+         <li class="nav-item menu_item_">
             <a href="javascript:;" class="nav-link nav-toggle">
                <i class="feather icon-message-square"></i>
                <span class="title">Soporte</span>
@@ -228,7 +230,7 @@
                   </a>
                </li>
             </ul>
-         </li> --}}
+         </li>
          {{-- FIN TICKETS --}}
          @if (Auth::user()->ID == 1)
             {{-- <li class="nav-item">
@@ -239,7 +241,8 @@
             {{-- LISTA DE USUARIOS--}}
             <li>
                <a href="{{route('setting-change-porcent')}}" class="nav-link nav-toggle">
-               <span class="title">Configuracion de Porcentajes</span>
+                  <i class="feather icon-settings"></i>
+                  <span class="title">Configuracion de Porcentajes</span>
                </a>
             </li>
             {{-- FIN LISTA DE USUARIOS --}}

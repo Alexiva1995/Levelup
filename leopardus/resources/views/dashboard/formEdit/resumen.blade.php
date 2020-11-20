@@ -9,7 +9,7 @@
                                 class="card-img-top img-fluid" >
                              
                                 <div class="card-footer text-center">
-                                    <button class="btn btn-primary" data-target="#myModal" data-toggle="modal">Cambiar</button>
+                                    <button class="btn btn-primary" data-target="#myModal" data-toggle="modal" style="padding: 1rem 1.3rem;">Cambiar</button>
                                 </div>
                                 
                         </div>

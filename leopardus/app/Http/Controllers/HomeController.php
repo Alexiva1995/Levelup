@@ -170,8 +170,7 @@ class HomeController extends Controller
           ]);
         }
 
-        // return view('admin.userRecords')->with(compact('datos'));
-        return view('admin.userRecords_t2')->with(compact('datos'));
+        return view('admin.userRecords')->with(compact('datos'));
     }
 
     public function changePorcent()

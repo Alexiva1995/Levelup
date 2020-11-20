@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 // configuracion inicial
 
-Route::group(['prefix' => 'installer', 'middleware' => 'licencia'], function (){
+Route::group(['prefix' => 'installer'], function (){
   Route::get('/step1', 'InstallController@index')->name('install-step1');
   Route::post('/savestep1', 'InstallController@saveStep1')->name('install-save-step1');
   Route::get('/step2', 'InstallController@step2')->name('install-step2');
@@ -23,7 +23,7 @@ Route::get('vistaCorreo', function ()
 Route::prefix('mioficina')->group(function ()
 {
   
-Route::group(['prefix' => 'autentication'], function (){
+Route::group(['prefix' => 'autentication', 'middleware' => 'profileStatus'], function (){
   Route::get('/register', 'Auth\RegisterController@newRegister')->name('autenticacion.new-register');
   Route::post('/saveregister', 'Auth\RegisterController@creater')->name('autenticacion.save-register');
   // ruta para el segundo factor
@@ -45,7 +45,7 @@ Route::group(['prefix' => 'autentication'], function (){
 
 // Tienda Online
 
-Route::group(['prefix' => 'tienda', 'middleware' => ['auth', 'licencia', 'guest', 'profile.status']], function (){
+Route::group(['prefix' => 'tienda', 'middleware' => ['auth', 'licencia', 'guest', 'profileStatus']], function (){
 
     Route::get('/', 'TiendaController@index')->name('tienda-index');
 
@@ -73,7 +73,7 @@ Route::group(['prefix' => 'tienda', 'middleware' => ['auth', 'licencia', 'guest'
 
 
 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'guest', 'profile.status']], function() {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'licencia', 'guest', 'profileStatus']], function() {
 
   Route::put('changeside', 'HomeController@changeSide')->name('change.side');
 
