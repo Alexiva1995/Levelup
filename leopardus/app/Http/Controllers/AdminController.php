@@ -21,8 +21,9 @@ use App\Notification;
 use App\SettingsEstructura;
 
 use App\Http\Controllers\IndexController;
-
-
+use App\MetodoPago;
+use App\SettingsComision;
+use App\Pagos;
 
 class AdminController extends Controller
 
@@ -46,6 +47,9 @@ class AdminController extends Controller
         $barra = $comision->getRestricionBono(Auth::user()->ID);
         $total_ventas = $this->totalVentasReferidos();
         $total_comision = $this->totalComisionReferidos();
+        $metodopagos = MetodoPago::all();
+        $comisiones = SettingsComision::select('comisionretiro', 'comisiontransf')->where('id', 1)->get();
+        $moneda = Monedas::where('principal', 1)->get()->first();
 
         if (Auth::user()->ID == 2) {
             $comision->clubBono(Auth::user()->ID);
@@ -77,7 +81,6 @@ class AdminController extends Controller
 
         }
 
-        
         $rolActual = '';
         $rolSig = '';
         $cantRoles = Rol::all()->count('id');
@@ -181,34 +184,42 @@ class AdminController extends Controller
         //fin Informacion Index
 
 
- $permiso = [];
+        $permiso = [];
+        if(Auth::user()->rol_id == 0){ 
+            // $this->ActualizarTodo();
+            $permiso = Permiso::where('iduser', Auth::user()->ID)->get()->toArray();
+                        DB::table($settings->prefijo_wp.'users')
+                    ->where('ID', '=', Auth::user()->ID)
+                    ->update(['status' => 1 ]);
+                    Auth::user()->status = true;
+        }
+        view()->share('title', 'Balance General');
 
-            if(Auth::user()->rol_id == 0){ 
+        $cuentawallet = '';
+        $cuentawallet = DB::table('user_campo')->where('ID', Auth::user()->ID)->select('paypal')->get()[0];
+        $cuentawallet = $cuentawallet->paypal;
+        
+        $wallets = Wallet::where([
+            ['iduser', '=', Auth::user()->ID], 
+            ['debito', '!=', 0],
+        ])->orWhere([
+            ['iduser', '=', Auth::user()->ID], 
+            ['credito', '!=', 0]
+            ])->get();
+
+        $pagosPendientes = false;
+        $validarPagos = Pagos::where([
+            ['iduser', '=', Auth::user()->ID],
+            ['estado', '=', 0]
+		])->first();
+        if (!empty($validarPagos)) { $pagosPendientes = true; }
             
-//            $this->ActualizarTodo();
-
-                $permiso = Permiso::where('iduser', Auth::user()->ID)->get()->toArray();
-
-                         DB::table($settings->prefijo_wp.'users')
-
-                        ->where('ID', '=', Auth::user()->ID)
-
-                        ->update(['status' => 1 ]);
-
-    
-
-                       Auth::user()->status = true;
-
-                         }
-
-                         view()->share('title', 'Balance General');
-
         return view('dashboard.index')->with(compact(
             'cantReferidosDirectos', 'cantReferidosIndirectos', 'cantReferidosActivos', 'fechaProxActivacion', 'new_member',
             'fullname', 'permiso', 'moneda',
-            'rolActual', 'rolSig', 'puntosRed', 'img_rolActual', 'img_rolSig', 'rentabilidad', 'ganancias', 'namePack', 'barra','total_ventas','total_comision'
-            ));
-
+            'rolActual', 'rolSig', 'puntosRed', 'img_rolActual', 'img_rolSig', 'rentabilidad', 'ganancias', 'namePack', 'barra','total_ventas','total_comision',
+            'metodopagos', 'comisiones', 'wallets', 'moneda', 'cuentawallet', 'pagosPendientes'
+        ));
     }
 
 
@@ -926,10 +937,10 @@ class AdminController extends Controller
                             ->get();
 
 
-
+                            
             foreach ($ordenes as $orden){
 
-                $compras = $this->getDetailsOrder($orden->post_id, $compras, '1', $user['nombre'], $fecha);
+                $compras = $this->getDetailsOrder($orden->post_id, $compras, $user['nivel'], $user['nombre'], $fecha);
 
             }
 
@@ -1085,24 +1096,21 @@ class AdminController extends Controller
         $comision = new ComisionesController;
         $funciones = new IndexController;
         $GLOBALS['allUsers'] = [];
-        $referidosDirectos = $funciones->getReferreds(Auth::user()->ID);
+        $iduser = Auth::user()->ID;
+        $referidosDirectos = $funciones->getReferreds($iduser);
         $funciones->getReferredsAll($referidosDirectos, 1, 4, [], 'arbol');
         $TodosReferidos = $funciones->ordenarArreglosMultiDimensiones_asc($GLOBALS['allUsers'], 'nivel');
         $totalVentas = array("nivel1" => 0, "nivel2" => 0, "nivel3" => 0, "nivel4" => 0);
         $nivel = 1;
-        foreach ($TodosReferidos as $referido) {
+        foreach ($TodosReferidos as $key => $referido) {
+            $nivel = $referido['nivel'];
             if ($nivel <= 4) {
-                if ($referido['nivel'] == $nivel) {
-                    $compras = $comision->getShopping($referido['ID']);
-                    foreach ($compras as $compra ) {
-                        $detelles = $comision->getShoppingDetails($compra->post_id);
-                        if ($detelles->post_status == 'wc-completed') {
-                            $totalVentas['nivel'.$nivel] += $comision->getShoppingTotal($compra->post_id);
-                        }
+                $compras = $comision->getShopping($referido['ID']);
+                foreach ($compras as $compra ) {
+                    $detelles = $comision->getShoppingDetails($compra->post_id);
+                    if ($detelles->post_status == 'wc-completed') {
+                        $totalVentas['nivel'.$referido['nivel']] += $comision->getShoppingTotal($compra->post_id);
                     }
-                }
-                else {
-                    $nivel++;
                 }
             }
         }
@@ -1110,27 +1118,16 @@ class AdminController extends Controller
     }
 
     public function totalComisionReferidos() {
-        $funciones = new IndexController;
-        $GLOBALS['allUsers'] = [];
         $iduser = Auth::user()->ID;
-        $referidosDirectos = $funciones->getReferreds($iduser);
-        $funciones->getReferredsAll($referidosDirectos, 1, 4, [], 'arbol');
-        $TodosReferidos = $funciones->ordenarArreglosMultiDimensiones_asc($GLOBALS['allUsers'], 'nivel');
+        $totalVentasReferidos = $this->totalVentasReferidos();
         $totalComision = array("nivel1" => 0, "nivel2" => 0, "nivel3" => 0, "nivel4" => 0);
-        $nivel = 1;
-        foreach ($TodosReferidos as $referido) {
-            if ($nivel <= 4) {
-                if ($referido['nivel'] == $nivel) {
-                    $totalComision['nivel'.$nivel] = Wallet::where([
-                        ['iduser', '=', $iduser],
-                        ['descripcion', 'like', '%Bonos Liderazgo%']
-                    ])->get()->sum('debito');
-                }
-                else {
-                    $nivel++;
-                }
-            }
-        }
+        $totalComision['nivel1'] = Wallet::where([
+            ['iduser', '=', $iduser],
+            ['descripcion', 'like', '%Bono Unilevel%']
+        ])->get()->sum('debito'); 
+        $totalComision['nivel2'] = $totalVentasReferidos['nivel2'] * 0.02;
+        $totalComision['nivel3'] = $totalVentasReferidos['nivel3'] * 0.03;
+        $totalComision['nivel4'] = $totalVentasReferidos['nivel4'] * 0.05;
         return $totalComision;
     }
 

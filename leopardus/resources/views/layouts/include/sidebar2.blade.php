@@ -70,7 +70,6 @@
             {{-- GEONOLOGIA --}}
             <li class="nav-item menu_item_">
                 <a href="javascript:;" class="nav-link nav-toggle">
-                {{-- <a href="{{url('mioficina/admin/userrecords')}}" class="nav-link nav-toggle"> --}}
                     <i class="feather icon-users"></i>
                     <span class="title">Red de Usuarios</span>
                     <span class="arrow"></span>
@@ -80,6 +79,12 @@
                         <a href="{{route('autenticacion.new-register').'?referred_id='.Auth::user()->ID}}" class="nav-link">
                             <i class="feather icon-circle"></i>
                             <span class="title">Nuevo Usuario</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{url('mioficina/referraltree')}}?" class="nav-link">
+                            <i class="feather icon-circle"></i>
+                            <span class="title">Árbol Unilevel</span>
                         </a>
                     </li>
                     <li class="nav-item">

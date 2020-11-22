@@ -12,7 +12,7 @@
             <div class="col-12 col-sm-6">
               <label for="">Seleccione un Metodo de Pago</label>
               <select name="metodopago" id="metodopago" class="form-control" onchange="metodospago()" required>
-                <option value="" selected disabled>Selecciones un Opción</option>
+                <option value="" selected hidden disabled>Selecciones un Opción</option>
                 @foreach ($metodopagos as $item)
                 <option value="{{$item->id}}">{{$item->nombre}}</option>
                 @endforeach
