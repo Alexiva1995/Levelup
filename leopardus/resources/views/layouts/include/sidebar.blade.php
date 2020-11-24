@@ -107,12 +107,12 @@
                         <span class="title">Nuevo Usuario</span>
                      </a>
                   </li>
-                  {{-- <li class="nav-item">
+                  <li class="nav-item">
                      <a href="{{url('mioficina/referraltree')}}" class="nav-link">
                         <i class="feather icon-circle"></i>
-                        <span class="title">Árbol de Usuarios</span>
+                        <span class="title">Árbol Unilevel</span>
                      </a>
-                  </li> --}}
+                  </li>
                   <li class="nav-item">
                      <a href="{{url('mioficina/admin/network/directrecords')}}" class="nav-link">
                         <i class="feather icon-circle"></i>

@@ -599,3 +599,7 @@ div.dataTables_wrapper button {
 .btn-tab-cell {
 	width: 70px !important;
 }
+
+.modal-dialog button.close{
+	border-radius: 0.357rem !important;
+}

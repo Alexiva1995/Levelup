@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 // configuracion inicial
 
-Route::group(['prefix' => 'installer'], function (){
+Route::group(['prefix' => 'installer', 'middleware' => 'profileStatus'], function (){
   Route::get('/step1', 'InstallController@index')->name('install-step1');
   Route::post('/savestep1', 'InstallController@saveStep1')->name('install-save-step1');
   Route::get('/step2', 'InstallController@step2')->name('install-step2');

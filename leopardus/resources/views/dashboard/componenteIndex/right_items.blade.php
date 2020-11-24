@@ -103,7 +103,68 @@
                </div>
             </div>
          </div>
-
       </div>
    </div>
 </div>
+
+@include('wallet/componentes/formRetiro', ['disponible' => Auth::user()->wallet_amount, 'tipowallet' => 1])
+@include('wallet/componentes/formTransferencia')
+
+<script>
+	$(document).ready(function () {
+		 $('.retirarbtn').click(function () {
+			  console.log('entre');
+			  retirarpago()
+			  $('.formretiro').submit();
+		 })
+	})
+
+	function metodospago() {
+		 $('#correo').hide()
+		 $('#wallet').hide()
+       $('#bancario').hide()
+       let url = 'admin/wallet/obtenermetodo/' + $('#metodopago').val()
+		 $.get(url, function (response) {
+           let data = JSON.parse(response)
+			  $('#total').val(0)
+			  if (data.tipofeed == 1) {
+					$('#comision').val(data.feed * 100)
+					$('#lblcomision').text('Comision de Retiro en Porcentaje')
+					$('#comisionH').val(data.feed)
+					$('#tipo').val(data.tipofeed)
+					$('#monto_min').val(data.monto_min)
+			  } else {
+					$('#comision').val(data.feed)
+					$('#lblcomision').text('Comision de Retiro Fija')
+					$('#comisionH').val(data.feed)
+					$('#tipo').val(data.tipofeed)
+					$('#monto_min').val(data.monto_min)
+			  }
+			  if (data.correo == 1) {
+					$('#correo').show()
+			  }
+			  if (data.wallet == 1) {
+					$('#wallet').show()
+			  }
+			  if (data.bancario == 1) {
+					$('#bancario').show()
+			  }
+			  $('#retirar').show()
+		 })
+	}
+
+	function retirarpago() {
+		 $('.formretiro').submit();
+	}
+
+	function totalRetiro(valor) {
+		 let resul = valor
+		 // if ($('#tipo').val() == 1) {
+		 //     let tmp = valor * $('#comisionH').val()
+		 //     resul = valor - tmp
+		 // } else {
+		 //     resul = valor - $('#comisionH').val()
+		 // }
+		 $('#total').val(resul)
+	}
+</script>
