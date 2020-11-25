@@ -229,15 +229,37 @@ class TiendaController extends Controller
      */
     public function saveOrdenPosts(Request $datos)
     {
-        $validate = $datos->validate([
-            'precio' => 'required',
-            'name' => 'required',
-        ]); 
+        if ($datos->no_modal == true) {
+            $idproducto = $datos->idproducto_;
+            $code_coinbase = $datos->code_coinbase_;
+            $id_coinbase = $datos->id_coinbase_;
+            $name = $datos->name_;
+            $precio = $datos->precio_;
+            $tipo = $datos->tipo_;
+            $validate = $datos->validate([
+                'precio_' => 'required',
+                'name_' => 'required',
+            ]);
+        }
+        else {
+            $idproducto = $datos->idproducto;
+            $code_coinbase = $datos->code_coinbase;
+            $id_coinbase = $datos->id_coinbase;
+            $name = $datos->name;
+            $precio = $datos->precio;
+            $tipo = $datos->tipo;
+            $validate = $datos->validate([
+                'precio' => 'required',
+                'name' => 'required',
+            ]);
+        }
+
         $settings = Settings::first();
+
         if ($validate) {
-            $verificarCode = DB::table($settings->prefijo_wp.'posts')->where('code_coinbase', $datos->code_coinbase)->first();
+            $verificarCode = DB::table($settings->prefijo_wp.'posts')->where('code_coinbase', $code_coinbase)->first();
             if (!empty($verificarCode)) {
-                $ruta = 'https://commerce.coinbase.com/charges/'.$datos->code_coinbase;
+                $ruta = 'https://commerce.coinbase.com/charges/'.$code_coinbase;
                 return redirect($ruta);
             }else{
                 $fecha = new Carbon();
@@ -268,13 +290,13 @@ class TiendaController extends Controller
                     'post_type' => 'shop_order',
                     'post_mime_type' => ' ',
                     'comment_count' => 1,
-                    'id_coinbase' => $datos->id_coinbase,
-                    'code_coinbase' => $datos->code_coinbase,
+                    'id_coinbase' => $id_coinbase,
+                    'code_coinbase' => $code_coinbase,
                 ]);
-                // if ($datos->tipo == 'Coinpayment') {
+                // if ($tipo == 'Coinpayment') {
                 //     DB::table('cointpayment_log_trxes')->where('payment_id', $datos->idpayment)->update(['idcomprawp' => $id]);
                 // }
-                // if ($datos->tipo == 'Cupon') {
+                // if ($tipo == 'Cupon') {
                 //     $cupon = DB::table('cupones')->where([
                 //         ['cupon', '=', $datos->cupon],
                 //         ['status', '=', 0]
@@ -283,17 +305,17 @@ class TiendaController extends Controller
                 $data = [
                     '_order_key' => 'wc_order_'.base64_encode($fecha->now()),
                     'ip' => $datos->ip(),
-                    'total' => $datos->precio.'.00',
-                    'idproducto' => $datos->idproducto
+                    'total' => $precio.'.00',
+                    'idproducto' => $idproducto
                 ];
                 if ($id) {
                     $linkProducto = str_replace('mioficina', '?post_type=shop_order&#038;p=', $datos->root());
                     DB::table($settings->prefijo_wp.'posts')->where('ID', $id)->update([
                         'guid' => $linkProducto.$id
                     ]);
-                    $this->saveOrdenPostmeta($id, $data, $datos->tipo);
-                    $this->saveOrderItems($id, $datos->name, $data);
-                    // if ($datos->tipo != 'Coinpayment') {
+                    $this->saveOrdenPostmeta($id, $data, $tipo);
+                    $this->saveOrderItems($id, $name, $data);
+                    // if ($tipo != 'Coinpayment') {
                     //     $this->accionSolicitud($id, 'wc-completed');
                     // }
                 }
@@ -304,11 +326,11 @@ class TiendaController extends Controller
                     $this->accionSolicitud($id, 'wc-completed');
                     return redirect()->route('tienda-index')->with('msj', 'Compra Realizada con exito');
                 }else{
-                    $ruta = 'https://commerce.coinbase.com/charges/'.$datos->code_coinbase;
+                    $ruta = 'https://commerce.coinbase.com/charges/'.$code_coinbase;
                     return redirect($ruta);
                 }
                 
-                // if ($datos->tipo != 'Coinpayment') {
+                // if ($tipo != 'Coinpayment') {
                 //     return redirect('tienda')->with('msj', 'Purchase '.$id.' Processed ');
                 // }
             }
