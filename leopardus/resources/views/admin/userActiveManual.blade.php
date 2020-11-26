@@ -7,11 +7,11 @@
 {{-- alertas --}}
 @include('dashboard.componentView.alert')
 
-<div class="card">
+<div class="card no-border">
 	<div class="card-content">
-		<div class="card-body">
+		<div class="card-body pl-0 pr-0">
 			<div class="table-responsive">
-				<table id="mytable" class="table zero-configuration">
+				<table id="mytable" class="table zero-configuration cell-border">
 					<thead>
 						<tr>
 							<th class="text-center">

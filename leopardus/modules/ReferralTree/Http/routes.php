@@ -1,7 +1,7 @@
 <?php
 
 Route::group([
-	'middleware' => ['web', 'auth'], 
+	'middleware' => ['web', 'auth', 'profileStatus'], 
 	'prefix' => 'mioficina/referraltree', 
 	'namespace' => 'Modules\ReferralTree\Http\Controllers'], function() {
 		//

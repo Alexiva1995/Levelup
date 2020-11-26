@@ -10,8 +10,8 @@
 		<h5 class="title-card">E-COMMERCE</h5>
       <h6 class="subtitle-card">Membresía</h6>
       <h1 class="title-card title-grand-t1 mt-1 mb-3">CLUB TRADER MEMBERSHIP</h1>
-	</div>
-	<div class="row">
+    </div> 
+    <div class="row">
       <div class="col-12 col-md-12 px-0">
          <div class="card card-tab">
             <div class="card-content">
@@ -24,19 +24,31 @@
                                  <div class="text-center card-shadow">
                                     <div class="card-content p-2 pb-3">
                                        <div class="card-content">
-                                          <h4 class="h3-card-blue text-up mb-0">Starter</h4>
-                                          <h4 class="subtitle-card text-up">Membership</h4>
-                                          <div class="img-card-t1 mb-2">
-                                             <img src="{{$item->imagen}}" alt="{{$item->post_title}}" class="card-img img-fluid">
-                                          </div>
-                                          <p class="p-card-border">Duración: 1 mes.</p>
-                                          <p class="p-card-border">Precio: USD 97</p>
-                                          <a class="btn text-blue float-right p-0 mb-1" onclick="detalles({{json_encode($item)}}, '{{$item->link->id}}', '{{$item->link->code}}')">Detalles</a>
-                                          {{-- <a class="btn text-blue float-right p-0 mb-1">Detalles</a> --}}
-                                          <button type="button" class="btn text-white w-100 btn-card">
-                                             <i class="ficon feather icon-shopping-cart"></i>
-                                             Comprar
-                                          </button>
+                                            <h4 class="h3-card-blue text-up mb-0">Starter</h4>
+                                            <h4 class="subtitle-card text-up">Membership</h4>
+                                            <div class="img-card-t1 mb-2">
+                                                <img src="{{$item->imagen}}" alt="{{$item->post_title}}" class="card-img img-fluid">
+                                             </div>
+                                            {{-- <p class="p-card-border">Duración: 1 mes.</p> --}}
+                                            <p class="p-card-border">Precio: USD {{$item->meta_value}}</p>
+                                            <a class="btn text-blue float-right p-0 mb-1"
+                                                onclick="detalles({{json_encode($item)}}, '{{$item->link->id}}', '{{$item->link->code}}')">
+                                                Detalles
+                                            </a>
+                                            <form action="{{route('tienda-save-compra')}}" method="POST">
+                                                {{ csrf_field() }}
+                                                <input type="hidden" name="no_modal" value="true">
+                                                <input type="hidden" name="idproducto_" value="{{$item->ID}}">
+                                                <input type="hidden" name="code_coinbase_" value="{{$item->link->code}}">
+                                                <input type="hidden" name="id_coinbase_" value="{{$item->link->id}}">
+                                                <input type="hidden" name="name_" value="{{$item->post_title}}">
+                                                <input type="hidden" name="precio_" value="{{$item->meta_value}}">
+                                                <input type="hidden" name="tipo_" value="">
+                                                <button type="submit" class="btn text-white w-100 btn-card">
+                                                    <i class="ficon feather icon-shopping-cart"></i>
+                                                    Comprar
+                                                </button>
+                                            </form>
                                        </div>
                                     </div>
                                  </div>
@@ -52,14 +64,23 @@
                                     <div class="img-card-t1 mb-2">
                                        <img src="{{$item->imagen}}" alt="{{$item->post_title}}" class="card-img img-fluid">
                                     </div>
-                                    <p class="p-card-border">Duración: 1 mes.</p>
-                                    <p class="p-card-border">Precio: USD 97</p>
+                                    {{-- <p class="p-card-border">Duración: 1 mes.</p> --}}
+                                    <p class="p-card-border">Precio: USD {{$item->meta_value}}</p>
                                     <a class="btn text-blue float-right p-0 mb-1" onclick="detalles({{json_encode($item)}}, '{{$item->link->id}}', '{{$item->link->code}}')">Detalles</a>
-                                    {{-- <a class="btn text-blue float-right p-0 mb-1">Detalles</a> --}}
-                                    <button type="button" class="btn text-white w-100 btn-card">
-                                       <i class="ficon feather icon-shopping-cart"></i>
-                                       Comprar
-                                    </button>
+                                    <form action="{{route('tienda-save-compra')}}" method="POST">
+                                        {{ csrf_field() }}
+                                        <input type="hidden" name="no_modal" value="true">
+                                        <input type="hidden" name="idproducto_" value="{{$item->ID}}">
+                                        <input type="hidden" name="code_coinbase_" value="{{$item->link->code}}">
+                                        <input type="hidden" name="id_coinbase_" value="{{$item->link->id}}">
+                                        <input type="hidden" name="name_" value="{{$item->post_title}}">
+                                        <input type="hidden" name="precio_" value="{{$item->meta_value}}">
+                                        <input type="hidden" name="tipo_" value="">
+                                        <button type="submit" class="btn text-white w-100 btn-card">
+                                            <i class="ficon feather icon-shopping-cart"></i>
+                                            Comprar
+                                        </button>
+                                    </form>
                                  </div>
                               </div>
                            </div>
@@ -71,7 +92,7 @@
             </div>
          </div>
       </div>
-      <div class="col-12 col-md-12 px-0">
+      {{-- <div class="col-12 col-md-12 px-0">
          <h1 class="title-card title-grand-t1 mt-25- mb-3">My Tools</h1>
          <div class="card card-tab">
             <div class="card-content">
@@ -142,7 +163,7 @@
                </div>
             </div>
          </div>
-      </div>
+      </div> --}}
 	</div>
 </div>
 

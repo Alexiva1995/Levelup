@@ -16,7 +16,7 @@ include(app_path() .'/../public/PHPExcel/Classes/PHPExcel.php');
 use PHPExcel;
 use PHPExcel_IOFactory;
 use Reflector;
-
+use function GuzzleHttp\json_decode;
 use function GuzzleHttp\json_encode;
 
 class HomeController extends Controller
@@ -165,13 +165,12 @@ class HomeController extends Controller
             'rol_id' => $llave->rol_id,
             'status' => $llave->status,
             // 'nombre_referido' => $usuario['display_name'],
-            'phone' => $masinfo->phone,
-            'fecha_activacion' => $llave->fecha_activacion
+            'phone' => ($masinfo->phone != null) ? $masinfo->phone : '',
+            'fecha_activacion' => ($llave->fecha_activacion != null) ? $llave->fecha_activacion : ''
           ]);
         }
 
-        // return view('admin.userRecords')->with(compact('datos'));
-        return view('admin.userRecords_t2')->with(compact('datos'));
+        return view('admin.userRecords')->with(compact('datos'));
     }
 
     public function changePorcent()

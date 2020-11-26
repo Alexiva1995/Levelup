@@ -15,19 +15,15 @@ $ano = Carbon::now()->format('Y')
                     <div class="card-content h-100 d-flex align-items-center">
                         <div class="card-body">
                             <div class="progress progress-bar-primary progress-xl mb-1">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0"
-                                    aria-valuemax="100" style="width:{{$barra['progre_porce']}}%">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:{{$barra['progre_porce']}}%">
                                     {{$barra['progreso']}} USD
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12 col-md-9">
-                                    <p class="mb-0"> Nivel actual: <strong class="p-blue">{{$barra['nivel']}}</strong>
-                                    </p>
-                                    <p class="mb-0"> Comisiones recibidas: <strong class="p-blue">{{$barra['comision']}}
-                                            USD</strong></p>
-                                    <p class="mb-0"> Puntos para logro de meta: <strong
-                                            class="p-blue">{{$barra['meta']}} USD</strong></p>
+                                    <p class="mb-0"> Nivel actual: <strong class="p-blue">{{$barra['nivel']}}</strong></p>
+                                    <p class="mb-0"> Comisiones recibidas: <strong class="p-blue">{{$barra['comision']}} USD</strong></p>
+                                    <p class="mb-0"> Puntos para logro de meta: <strong class="p-blue">{{$barra['meta']}} USD</strong></p>
                                 </div>
                                 <div class="col-12 col-md-3">
                                     <button type="button"
