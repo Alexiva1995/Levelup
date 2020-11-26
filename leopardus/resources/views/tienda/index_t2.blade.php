@@ -32,15 +32,13 @@
                                             {{-- <p class="p-card-border">Duración: 1 mes.</p> --}}
                                             <p class="p-card-border">Precio: USD {{$item->meta_value}}</p>
                                             <a class="btn text-blue float-right p-0 mb-1"
-                                                onclick="detalles({{json_encode($item)}}, '{{$item->link->id}}', '{{$item->link->code}}')">
+                                                onclick="detalles({{json_encode($item)}})">
                                                 Detalles
                                             </a>
                                             <form action="{{route('tienda-save-compra')}}" method="POST">
                                                 {{ csrf_field() }}
                                                 <input type="hidden" name="no_modal" value="true">
                                                 <input type="hidden" name="idproducto_" value="{{$item->ID}}">
-                                                <input type="hidden" name="code_coinbase_" value="{{$item->link->code}}">
-                                                <input type="hidden" name="id_coinbase_" value="{{$item->link->id}}">
                                                 <input type="hidden" name="name_" value="{{$item->post_title}}">
                                                 <input type="hidden" name="precio_" value="{{$item->meta_value}}">
                                                 <input type="hidden" name="tipo_" value="">
@@ -66,13 +64,11 @@
                                     </div>
                                     {{-- <p class="p-card-border">Duración: 1 mes.</p> --}}
                                     <p class="p-card-border">Precio: USD {{$item->meta_value}}</p>
-                                    <a class="btn text-blue float-right p-0 mb-1" onclick="detalles({{json_encode($item)}}, '{{$item->link->id}}', '{{$item->link->code}}')">Detalles</a>
+                                    <a class="btn text-blue float-right p-0 mb-1" onclick="detalles({{json_encode($item)}})">Detalles</a>
                                     <form action="{{route('tienda-save-compra')}}" method="POST">
                                         {{ csrf_field() }}
                                         <input type="hidden" name="no_modal" value="true">
                                         <input type="hidden" name="idproducto_" value="{{$item->ID}}">
-                                        <input type="hidden" name="code_coinbase_" value="{{$item->link->code}}">
-                                        <input type="hidden" name="id_coinbase_" value="{{$item->link->id}}">
                                         <input type="hidden" name="name_" value="{{$item->post_title}}">
                                         <input type="hidden" name="precio_" value="{{$item->meta_value}}">
                                         <input type="hidden" name="tipo_" value="">
@@ -172,7 +168,7 @@
 {{-- @include('tienda.modalCupon') --}}
 
 <script>
-    function detalles(product, id, code) {
+    function detalles(product) {
         $('#idproducto').val(product.ID)
         $('#img').attr('src',product.imagen)
         $('#title').html(product.post_title)
@@ -180,31 +176,8 @@
         $('#content').html(product.post_content)
         $('#price').html('$ '+product.meta_value)
         $('#price2').val(product.meta_value)
-        $('#id_coinbase').val(id)
-        $('#code_coinbase').val(code)
         $('#myModal1').modal('show')
     }
 
-    function validarCupon() {
-        let cupon = $('#cupon').val();
-        let url = '{{route('tienda-verificar-cupon')}}'
-        let token = '{{ csrf_token() }}'
-        $.post(url, {'_token': token, 'cupon': cupon}).done(function(response){
-            let data = JSON.parse(response)
-            if (data.msj != '') {
-                alert(data.msj)
-            }else{
-                $("#tipo1").val(data.tipo)
-                $("#producto" + 1).val(data.paquete)
-                $("#total" + 1).val(data.precio)
-                $("#myModalLabel1").text('Cupon del Producto ' + data.paquete)
-                $("#idproducto" + 1).val(data.idpaquete)
-                $("#restante" + 1).val(0)
-                $("#btn" + 1).text('Recibir Cupon')
-                $("#cupon" + 1).val(data.cupon)
-                $("#myModal" + 1).modal('show')
-            }
-        })
-    }
 </script>
 @endsection

@@ -40,12 +40,7 @@ class TiendaController extends Controller
 
     //Historial de Comisiones para el usuario
 
-    public function index(){
-        // phpinfo();
-        // dd('pa');
-        $apiKey = env('COINBASE_API_KEY');
-        $apiClientObj = ApiClient::init($apiKey);
-        $apiClientObj->setTimeout(6);
+    public function index(){        
         view()->share('title', 'Tienda');
         $productos = $this->getProductoWP();
         $moneda = Monedas::where('principal', 1)->get()->first();
@@ -95,7 +90,7 @@ class TiendaController extends Controller
                 // $restante = ($result[$cont]->meta_value * 0.10);
                 // $valor = ($result[$cont]->meta_value + $restante);
                 $result[$cont]->meta_value = $result[$cont]->meta_value;
-                $result[$cont]->link = $this->linkCoinPayMent($result[$cont]);
+                // $result[$cont]->link = $this->linkCoinPayMent($result[$cont]);
             $cont++;
         }  
         return $result;
@@ -109,23 +104,10 @@ class TiendaController extends Controller
      */
     public function linkCoinPayMent(object $producto)
     {
-        // $restante = ($producto->meta_value * 0.10);
-        // $valor = ($producto->meta_value + $restante);
-        // $coinpayment['amountTotal'] = (int) $producto->meta_value; // USD
-        // $coinpayment['note'] = $producto->post_title;
-        // $coinpayment['idproducto'] = $producto->ID;
-        // $coinpayment['buyer_email'] = Auth::user()->user_email;
-        // $coinpayment['redirect_url'] = route('coinpayment.ipn.received');
-        // $coinpayment['items'][0] = [
-        //     'descriptionItem' => $producto->post_title,
-        //     'priceItem' => (int) $producto->meta_value, // USD
-        //     'qtyItem' => 1,
-        //     'subtotalItem' => (int) $producto->meta_value // USD
-        // ];
+        $apiKey = env('COINBASE_API_KEY');
+        $apiClientObj = ApiClient::init($apiKey);
+        $apiClientObj->setTimeout(6);
 
-        // $link_transaction1 = CoinPayment::url_payload($coinpayment);
-        // return $link_transaction1;
-        // $descricion = (empty($producto->post_content)) ? 'N/A' : $producto->post_content;
         $chargerData = [
             'description' => 'No Aplica',
             'metadata' => $producto,
@@ -144,81 +126,6 @@ class TiendaController extends Controller
         return $chargerObj;
     }
 
-    public function saveCupon(Request $datos)
-    {
-        $validate = $datos->validate([
-            'precio' => 'required',
-            'name' => 'required',
-        ]);
-        if ($validate) {
-            if (Auth::user()->wallet_amount < $datos->precio) {
-                return redirect()->back()->with('msj2', 'You do not have enough balance to make this purchase.');
-            }
-            $iduser = Auth::user()->ID;
-            $user = User::find($iduser);
-            $admin = User::find(1);
-            $user->wallet_amount = ($user->wallet_amount - floatval($datos->precio));
-            $admin->wallet_amount = ($admin->wallet_amount + floatval($datos->precio));
-            $user->save();
-            $admin->save();
-            $cadena = $iduser.$datos->name.$datos->idproducto.Carbon::now();
-            $cupon = md5($cadena);
-            $arregloCupon = [
-                'idpaquete' => $datos->idproducto,
-                'paquete' => $datos->name,
-                'precio' => $datos->precio,
-                'usuario_regala' => $iduser,
-                'tipo' => 'Cupon',
-                'cupon' => $cupon
-            ];
-            $datos = [
-                'iduser' => $user->ID,
-                'usuario' => $user->display_name,
-                'descripcion' => 'Package gift '.$datos->name,
-                'descuento' => 0,
-                'puntos' => 0,
-                'puntosI' => 0,
-                'puntosD' => 0,
-                'debito' => 0,
-                'tantechcoin' => 0,
-                'credito' => floatval($datos->precio),
-                'balance' => $user->wallet_amount,
-                'tipotransacion' => 1,
-            ];
-            $wallet = new WalletController;
-		    $wallet->saveWallet($datos);
-            DB::table('cupones')->insert($arregloCupon);
-            Mail::send('emails.cuponEmail',  ['cupon' => $cupon], function($msj) use ($user){
-				$msj->subject('New Generated Coupon');
-				$msj->to($user->user_email);
-            });
-            return redirect('tienda')->with('msj', 'Successfully created coupon, check your email');
-        }
-    }
-
-    public function validacionCupon(Request $datos)
-    {
-        $cupon = DB::table('cupones')->where([
-            ['cupon', '=', $datos->cupon],
-            ['status', '=', 0]
-        ])->first();
-        if (!empty($cupon)) {
-            $data = [
-                'msj' => '',
-                'idpaquete' => $cupon->idpaquete,
-                'paquete' => $cupon->paquete,
-                'precio' => $cupon->precio,
-                'tipo' => $cupon->tipo,
-                'cupon' => $cupon->cupon
-            ];
-            return json_encode($data);
-        }else{
-            $data = [
-                'msj' => 'Coupon not valid or already used'
-            ];
-            return json_encode($data);
-        }
-    }
 
     /**
      * Permite Guardar la informacion de la entrada en wp
@@ -231,8 +138,6 @@ class TiendaController extends Controller
     {
         if ($datos->no_modal == true) {
             $idproducto = $datos->idproducto_;
-            $code_coinbase = $datos->code_coinbase_;
-            $id_coinbase = $datos->id_coinbase_;
             $name = $datos->name_;
             $precio = $datos->precio_;
             $tipo = $datos->tipo_;
@@ -243,8 +148,6 @@ class TiendaController extends Controller
         }
         else {
             $idproducto = $datos->idproducto;
-            $code_coinbase = $datos->code_coinbase;
-            $id_coinbase = $datos->id_coinbase;
             $name = $datos->name;
             $precio = $datos->precio;
             $tipo = $datos->tipo;
@@ -257,82 +160,68 @@ class TiendaController extends Controller
         $settings = Settings::first();
 
         if ($validate) {
-            $verificarCode = DB::table($settings->prefijo_wp.'posts')->where('code_coinbase', $code_coinbase)->first();
-            if (!empty($verificarCode)) {
-                $ruta = 'https://commerce.coinbase.com/charges/'.$code_coinbase;
-                return redirect($ruta);
-            }else{
-                $fecha = new Carbon();
-                $title = 'Orden&ndash;'.$fecha->now()->toFormattedDateString().' @ '.$fecha->now()->format('h:i A');
-                $tpmname = str_replace(' ', '-', $fecha->now()->toFormattedDateString());
-                $tpmname = str_replace(',', '', $tpmname);
-                $tpmname2 = str_replace(' ', '-', $fecha->now()->format('hi a'));
-                $name = 'perdido-'.$tpmname.'-'.$tpmname2;
-                $id = DB::table($settings->prefijo_wp.'posts')->insertGetId([
-                    'post_author' => 1,
-                    'post_date' => $fecha->now(),
-                    'post_date_gmt' => $fecha->now(),
-                    'post_content' => ' ',
-                    'post_title' => $title,
-                    'post_excerpt' => ' ',
-                    'post_status' => 'wc-on-hold',
-                    'comment_status' => 'open',
-                    'ping_status' => 'closed',
-                    'post_password' => 'order_'.base64_encode($fecha->now()),
-                    'post_name' => $name,
-                    'to_ping' => ' ',
-                    'pinged' => ' ',
-                    'post_modified' => $fecha->now(),
-                    'post_modified_gmt' => $fecha->now(),
-                    'post_content_filtered' => ' ',
-                    'post_parent' => 0,
-                    'menu_order' => 0,
-                    'post_type' => 'shop_order',
-                    'post_mime_type' => ' ',
-                    'comment_count' => 1,
-                    'id_coinbase' => $id_coinbase,
-                    'code_coinbase' => $code_coinbase,
+            $fecha = new Carbon();
+            $title = 'Orden&ndash;'.$fecha->now()->toFormattedDateString().' @ '.$fecha->now()->format('h:i A');
+            $tpmname = str_replace(' ', '-', $fecha->now()->toFormattedDateString());
+            $tpmname = str_replace(',', '', $tpmname);
+            $tpmname2 = str_replace(' ', '-', $fecha->now()->format('hi a'));
+            $name = 'perdido-'.$tpmname.'-'.$tpmname2;
+            $id = DB::table($settings->prefijo_wp.'posts')->insertGetId([
+                'post_author' => 1,
+                'post_date' => $fecha->now(),
+                'post_date_gmt' => $fecha->now(),
+                'post_content' => ' ',
+                'post_title' => $title,
+                'post_excerpt' => ' ',
+                'post_status' => 'wc-on-hold',
+                'comment_status' => 'open',
+                'ping_status' => 'closed',
+                'post_password' => 'order_'.base64_encode($fecha->now()),
+                'post_name' => $name,
+                'to_ping' => ' ',
+                'pinged' => ' ',
+                'post_modified' => $fecha->now(),
+                'post_modified_gmt' => $fecha->now(),
+                'post_content_filtered' => ' ',
+                'post_parent' => 0,
+                'menu_order' => 0,
+                'post_type' => 'shop_order',
+                'post_mime_type' => ' ',
+                'comment_count' => 1,
+            ]);
+            
+            $data = [
+                '_order_key' => 'wc_order_'.base64_encode($fecha->now()),
+                'ip' => $datos->ip(),
+                'total' => $precio.'.00',
+                'idproducto' => $idproducto
+            ];
+            if ($id) {
+                $linkProducto = str_replace('mioficina', '?post_type=shop_order&#038;p=', $datos->root());
+                DB::table($settings->prefijo_wp.'posts')->where('ID', $id)->update([
+                    'guid' => $linkProducto.$id
                 ]);
-                // if ($tipo == 'Coinpayment') {
-                //     DB::table('cointpayment_log_trxes')->where('payment_id', $datos->idpayment)->update(['idcomprawp' => $id]);
-                // }
-                // if ($tipo == 'Cupon') {
-                //     $cupon = DB::table('cupones')->where([
-                //         ['cupon', '=', $datos->cupon],
-                //         ['status', '=', 0]
-                //     ])->update(['status' => 1, 'usuario_recibe' => Auth::user()->ID]);
-                // }
-                $data = [
-                    '_order_key' => 'wc_order_'.base64_encode($fecha->now()),
-                    'ip' => $datos->ip(),
-                    'total' => $precio.'.00',
-                    'idproducto' => $idproducto
-                ];
-                if ($id) {
-                    $linkProducto = str_replace('mioficina', '?post_type=shop_order&#038;p=', $datos->root());
-                    DB::table($settings->prefijo_wp.'posts')->where('ID', $id)->update([
-                        'guid' => $linkProducto.$id
-                    ]);
-                    $this->saveOrdenPostmeta($id, $data, $tipo);
-                    $this->saveOrderItems($id, $name, $data);
-                    // if ($tipo != 'Coinpayment') {
-                    //     $this->accionSolicitud($id, 'wc-completed');
-                    // }
+                $this->saveOrdenPostmeta($id, $data, $tipo);
+                $this->saveOrderItems($id, $name, $data);
+
+                $contrProducto = new ProductController;
+                $producto = $contrProducto->getOneProduct($idproducto);
+                if (!empty($producto)) {
+                    $link = $this->linkCoinPayMent($producto);
+                    if (!empty($link)) {
+                        DB::table($settings->prefijo_wp.'posts')->where('ID', $id)->update([
+                            'id_coinbase' => $link->id,
+                            'code_coinbase' => $link->code,
+                        ]);
+                        $ruta = $link->hosted_url;
+                    }
                 }
-                if (Auth::user()->ID >= 315 || Auth::user()->ID <= 318) {
-                    $this->accionSolicitud($id, 'wc-completed');
-                    return redirect()->route('tienda-index')->with('msj', 'Compra Realizada con exito');
-                }elseif (Auth::user()->ID == 2) {
-                    $this->accionSolicitud($id, 'wc-completed');
-                    return redirect()->route('tienda-index')->with('msj', 'Compra Realizada con exito');
-                }else{
-                    $ruta = 'https://commerce.coinbase.com/charges/'.$code_coinbase;
+
+                if (!empty($ruta)) {
                     return redirect($ruta);
-                }
-                
-                // if ($tipo != 'Coinpayment') {
-                //     return redirect('tienda')->with('msj', 'Purchase '.$id.' Processed ');
-                // }
+                }else{
+                    return redirect()->back()->with('msj', 'Hubo Un Problema con el proceso de compra');
+                }   
             }
         }
     }
